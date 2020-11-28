@@ -1,0 +1,1 @@
+computer 7 5 human
