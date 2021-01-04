@@ -74,11 +74,11 @@ def last_free_row_on_col(column):
 
 def check_win(colour: (int, int, int)) -> bool:
 
-    value = None
-    if colour == RED:
-        value = 2
-    elif colour == YELLOW:
-        value = 1
+    # value = None
+    # if colour == RED:
+    #     value = 2
+    # elif colour == YELLOW:
+    #     value = 1
 
     # horizontally:
     def horizontal_win() -> bool:
@@ -86,7 +86,7 @@ def check_win(colour: (int, int, int)) -> bool:
         for i in range(ROWS):
             count = 1
             for j in range(COLS-1):
-                if board[i][j] == board[i][j + 1] == value:
+                if board[i][j] == board[i][j + 1] == 1:
                     count += 1
                 else:  # if board[i][j] != board[i][j+1]:
                     if count >= 4:
@@ -102,7 +102,7 @@ def check_win(colour: (int, int, int)) -> bool:
         for j in range(COLS):
             count = 1
             for i in range(ROWS - 1):
-                if board[i][j] == board[i + 1][j] == value:
+                if board[i][j] == board[i + 1][j] == 1:
                     count += 1
                 else:
                     if count >= 4:
@@ -131,7 +131,7 @@ def check_win(colour: (int, int, int)) -> bool:
             count = 1
             for elem in range(len(diag_i) - 1):
                 print(diag_i[elem], end='; ')
-                if diag_i[elem] == diag_i[elem + 1] == value:
+                if diag_i[elem] == diag_i[elem + 1] == 1:
                     count = count + 1
                 else:
                     if count >= 4:
@@ -250,7 +250,7 @@ while running:
             exit()  # quit game
 
         # if mouse click:
-        elif (event.type == pygame.MOUSEBUTTONUP or event.type == pygame.MOUSEBUTTONDOWN) and event.button == left:
+        elif event.type == pygame.MOUSEBUTTONUP or event.type == pygame.MOUSEBUTTONDOWN and event.button == left:
             # piece is dropped; update board
             pos = pygame.mouse.get_pos()
             row, col = event.pos[0], int(np.math.floor(row / SQUARE_SIZE))
@@ -259,6 +259,7 @@ while running:
             # update board:
             if drop_on_row != -1:  # if column is not empty and piece can be dropped:
                 drop_piece(colour, drop_on_row, col)  # drop piece
+                FREE_CELLS = FREE_CELLS - 1
                 game_board.draw_board()  # update GUI board
                 game_board.print_board()  # print board
                 colour, turn = switch_player(colour, turn)  # switch players
@@ -275,7 +276,7 @@ while running:
             pygame.display.update()
 
         # stop condition:
-        if is_game_over():
-            running = False
+        # if is_game_over():
+        #     running = False
 
         pygame.display.update()
